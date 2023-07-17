@@ -10,12 +10,10 @@ jobs:
 
     - name: Set up Google Application Credentials
       run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64 --decode > ./gcp-key.json
-      env:
-        GOOGLE_APPLICATION_CREDENTIALS: ./gcp-key.json
 
     - name: Deploy to Firebase
       uses: w9jds/firebase-action@v2.0.0
       with:
         args: deploy --only hosting
       env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/gcp-key.json
+        GCP_SA_KEY: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
